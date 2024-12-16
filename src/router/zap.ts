@@ -54,24 +54,49 @@ router.get("/", authMiddleware, async (req, res) => {
     where: {
       userId: id,
     },
-    include:{
-        actions:{
-            include:{
-             type:true   
-            }
+    include: {
+      actions: {
+        include: {
+          type: true,
         },
-         trigger:{
-            include:{
-             type:true   
-            }
-        }
-    }
+      },
+      trigger: {
+        include: {
+          type: true,
+        },
+      },
+    },
   });
 
   res.json({
     zaps,
   });
 });
-router.post("/:zapId", authMiddleware, (req, res) => {});
+router.post("/:zapId", authMiddleware, async (req, res) => {
+  //@ts-ignore
+  const id = req.id;
+  const zap = await prismaClient.zap.findFirst({
+    where: {
+      id: req.params.zapId,
+      userId: id,
+    },
+    include: {
+      actions: {
+        include: {
+          type: true,
+        },
+      },
+      trigger: {
+        include: {
+          type: true,
+        },
+      },
+    },
+  });
+
+  res.json({
+    zap,
+  });
+});
 
 export const zapRouter = router;
