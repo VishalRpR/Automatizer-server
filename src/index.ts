@@ -8,6 +8,6 @@ app.use(cors());
 app.use(express.json())
 
 app.use("/api/v1/user",userRouter);
-app.unsubscribe("api/v1/zap",zapRouter)
+app.use("/api/v1/zap",zapRouter)
 
 app.listen(3001);

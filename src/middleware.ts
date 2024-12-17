@@ -14,8 +14,6 @@ export const authMiddleware: RequestHandler = (
     if (payload) {
       //@ts-ignore
       req.id = payload.id;
-      //@ts-ignore
-      req.name = payload.name;
     }
   } catch (error) {
     res.status(500).json({
